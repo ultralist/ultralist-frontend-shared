@@ -1,7 +1,7 @@
 // @flow
 
-import { todoData } from "../test/test_helper"
-import EventCache from "./eventCache"
+import { todoData } from "../fakeData"
+import Cacheable from "./cacheable"
 import utils from "../utils"
 
 const todoList = {
@@ -21,7 +21,7 @@ export default class TestBackend {
     return new Promise(resolve => resolve(todoList))
   }
 
-  updateTodoList(uuid: string, cache: EventCache) {
+  updateTodoList(uuid: string, cache: Cacheable) {
     return new Promise(resolve => resolve(todoList))
   }
 

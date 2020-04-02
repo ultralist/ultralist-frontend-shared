@@ -1,4 +1,4 @@
-import EventCache from "./eventCache"
+import Cacheable from "./cacheable"
 
 export default class Backend {
   token: string
@@ -15,7 +15,7 @@ export default class Backend {
     return this.apiRequest(`api/v1/todo_lists/${uuid}`, "GET")
   }
 
-  updateTodoList(todolistUUID: string, cache: EventCache) {
+  updateTodoList(todolistUUID: string, cache: Cacheable) {
     return this.apiRequest(`api/v1/todo_lists/${todolistUUID}`, "PUT", {
       events: cache.toJSON()
     })

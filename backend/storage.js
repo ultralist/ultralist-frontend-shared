@@ -1,7 +1,8 @@
 // @flow
 import TodoList, { createTodoListFromJSON } from "../models/todoList"
+import { Storeable } from "./storeable"
 
-export default class Storage {
+export default class Storage implements Storeable {
   loadTodoLists() {
     const rawLists = JSON.parse(window.localStorage.getItem("todolists"))
     return rawLists.map(list => createTodoListFromJSON(list))
