@@ -1,6 +1,6 @@
 import { format, addDays } from "date-fns"
-import utils from "../utils"
-import TodoItemModel from "../models/todoItem"
+import utils from "./utils"
+import TodoItemModel from "./models/todoItem"
 
 export const todoData = [
   {
@@ -13,7 +13,7 @@ export const todoData = [
     due: format(addDays(new Date(), 1), "yyyy-MM-dd"),
     notes: ["here is note 1", "here is note 2"],
     completed: false,
-    archived: false
+    archived: false,
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const todoData = [
     due: format(new Date(), "yyyy-MM-dd"),
     notes: ["here is note 1", "here is note 2"],
     completed: false,
-    archived: false
+    archived: false,
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ export const todoData = [
     due: format(new Date(), "yyyy-MM-dd"),
     notes: [],
     completed: false,
-    archived: false
+    archived: false,
   },
   {
     id: 4,
@@ -49,7 +49,7 @@ export const todoData = [
     due: format(new Date(), "yyyy-MM-dd"),
     notes: [],
     completed: true,
-    archived: false
+    archived: false,
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ export const todoData = [
     notes: [],
     completed: true,
     isPriority: true,
-    archived: true
+    archived: true,
   },
   {
     id: 6,
@@ -74,7 +74,7 @@ export const todoData = [
     notes: [],
     completed: false,
     isPriority: false,
-    archived: false
+    archived: false,
   },
   {
     id: 7,
@@ -86,8 +86,8 @@ export const todoData = [
     notes: [],
     completed: false,
     isPriority: false,
-    archived: false
-  }
+    archived: false,
+  },
 ]
 
-export const todos = todoData.map(t => new TodoItemModel(t))
+export const todos = todoData.map((t) => new TodoItemModel(t))

@@ -15,7 +15,7 @@ type ConstructorArgs = {
   completed?: boolean,
   due?: string,
   group?: string,
-  filterString?: string
+  filterString?: string,
 }
 
 export default class Filter {
@@ -143,8 +143,8 @@ export default class Filter {
     }
   }
 
-  save() {
-    window.localStorage.setItem(FILTER_KEY, JSON.stringify(this))
+  save(storage: LocalStoreable) {
+    storage.saveFilter(this)
   }
 
   toJSON() {
@@ -156,7 +156,7 @@ export default class Filter {
       isPriority: this.isPriority,
       completed: this.completed,
       due: this.due,
-      group: this.group
+      group: this.group,
     }
   }
 }
