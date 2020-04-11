@@ -143,10 +143,6 @@ export default class Filter {
     }
   }
 
-  save(storage: LocalStoreable) {
-    storage.saveFilter(this)
-  }
-
   toJSON() {
     return {
       contexts: this.contexts,
@@ -159,10 +155,4 @@ export default class Filter {
       group: this.group,
     }
   }
-}
-
-export const LoadFromStorage = (): Filter => {
-  const storedFilter = window.localStorage.getItem(FILTER_KEY)
-  if (!storedFilter) return new Filter({ archived: false, completed: false })
-  return new Filter(JSON.parse(storedFilter))
 }

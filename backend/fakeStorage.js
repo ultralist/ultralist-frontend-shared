@@ -1,5 +1,7 @@
 // @flow
-import TodoList, { createTodoListFromJSON } from "../models/todoList"
+import TodoList from "../models/todoList"
+import FilterModel from "../models/filter"
+import TodoItemModel from "../models/todoItem"
 import { LocalStoreable } from "./localStoreable"
 import { todoData } from "../fakeData"
 import utils from "../utils"
@@ -7,14 +9,17 @@ import utils from "../utils"
 export default class FakeStorage implements LocalStoreable {
   todoLists: Array<TodoList>
   filter: ?FilterModel
+  modalIsOpen: boolean
 
   loadTodoLists() {
     this.todoLists = []
 
+    const todos = todoData.map((todo) => new TodoItemModel(todo))
+
     const todoList = new TodoList({
       name: "Test list",
       uuid: utils.generateUuid(),
-      todos: todoData,
+      todos: todos,
     })
     this.todoLists.push(todoList)
 
@@ -38,12 +43,20 @@ export default class FakeStorage implements LocalStoreable {
 
   loadFilter() {
     if (!this.filter) {
-      this.filter = new FilterModel()
+      this.filter = new FilterModel({ archived: false })
     }
     return this.filter
   }
 
   saveFilter(filter: FilterModel) {
     this.filter = filter
+  }
+
+  isModalOpen(): boolean {
+    return this.modalIsOpen
+  }
+
+  setModalIsOpen(open: boolean) {
+    this.modalIsOpen = open
   }
 }
