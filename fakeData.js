@@ -1,6 +1,7 @@
 import { format, addDays } from "date-fns"
 import utils from "./utils"
 import TodoItemModel from "./models/todoItem"
+import TodoList from "./models/todoList"
 
 export const todoData = [
   {
@@ -91,3 +92,12 @@ export const todoData = [
 ]
 
 export const todos = todoData.map((t) => new TodoItemModel(t))
+
+export const createFakeTodoList = () => {
+  const todoList = new TodoList({
+    name: "Test list",
+    uuid: utils.generateUuid(),
+    todos: todos,
+  })
+  return todoList
+}
