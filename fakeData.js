@@ -7,7 +7,7 @@ export const todoData = [
   {
     id: 1,
     uuid: utils.generateUuid(),
-    subject: "Call with @Bob and @Frank about +bigProject",
+    subject: "[p] Call with @Bob and @Frank about +bigProject",
     projects: ["bigProject"],
     contexts: ["Bob", "Frank"],
     isPriority: true,
@@ -43,7 +43,7 @@ export const todoData = [
   {
     id: 4,
     uuid: utils.generateUuid(),
-    subject: "Did @john call me back about the +testProject?",
+    subject: "[C] Did @john call me back about the +testProject?",
     projects: ["testProject"],
     contexts: ["john"],
     isPriority: false,
@@ -55,7 +55,7 @@ export const todoData = [
   {
     id: 5,
     uuid: utils.generateUuid(),
-    subject: "Follow up with @nick about 6-month salary increase",
+    subject: "[C/P/A] Follow up with @nick about 6-month salary increase",
     projects: [],
     contexts: ["Nick"],
     due: format(addDays(new Date(), -2), "yyyy-MM-dd"),
@@ -68,7 +68,7 @@ export const todoData = [
     id: 6,
     uuid: utils.generateUuid(),
     subject:
-      "Work on +budget presentation for leadership team, sell to @Nick first",
+      "[] Work on +budget presentation for leadership team, sell to @Nick first",
     projects: ["budget"],
     contexts: ["Nick"],
     due: format(addDays(new Date(), -2), "yyyy-MM-dd"),
@@ -80,7 +80,7 @@ export const todoData = [
   {
     id: 7,
     uuid: utils.generateUuid(),
-    subject: "no +due @date",
+    subject: "[] no +due @date",
     projects: ["due"],
     contexts: ["date"],
     due: null,
