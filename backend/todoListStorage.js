@@ -19,9 +19,9 @@ export default class TodoListStorage {
   }
 
   saveTodoList(todoList: TodoListModel) {
-    const lists = this.storage.load("todoLists")
+    const lists = this.storage.load("todolists")
     const index = lists.map((l) => l.uuid).indexOf(todoList.uuid)
     lists[index] = todoList
-    this.storage.save("todoLists", lists)
+    this.storage.save("todolists", lists)
   }
 }
