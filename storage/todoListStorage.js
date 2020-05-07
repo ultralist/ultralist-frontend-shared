@@ -1,17 +1,17 @@
 // @flow
-import { LocalStoreable } from "./localStoreable"
+import { Storeable } from "./storeable"
 
 import TodoListModel from "../models/todoList"
 
 export default class TodoListStorage {
-  storage: LocalStoreable
+  storage: Storeable
 
-  constructor(storage: LocalStoreable) {
+  constructor(storage: Storeable) {
     this.storage = storage
   }
 
   loadTodoList(uuid: string): ?TodoListModel {
-    return this.storage.load("todolists").find((list) => list.uuid === uuid)
+    return this.storage.load("todolists").find(list => list.uuid === uuid)
   }
 
   loadFirstTodoList(): TodoListModel {
@@ -20,8 +20,12 @@ export default class TodoListStorage {
 
   saveTodoList(todoList: TodoListModel) {
     const lists = this.storage.load("todolists")
-    const index = lists.map((l) => l.uuid).indexOf(todoList.uuid)
+    const index = lists.map(l => l.uuid).indexOf(todoList.uuid)
     lists[index] = todoList
     this.storage.save("todolists", lists)
+  }
+
+  saveTodoLists(todoLists: TodoListModel[]) {
+    this.storage.save("todolists", todoLists)
   }
 }

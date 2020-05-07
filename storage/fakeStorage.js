@@ -1,12 +1,12 @@
 // @flow
 
-import { LocalStoreable } from "./localStoreable"
+import { Storeable } from "./storeable"
 
-export default class FakeStorage implements LocalStoreable {
+export default class FakeStorage implements Storeable {
   storage: Object
 
   constructor() {
-    this.storage = {}
+    this.clear()
   }
 
   load(key: string) {
@@ -19,5 +19,9 @@ export default class FakeStorage implements LocalStoreable {
 
   dump() {
     return this.storage
+  }
+
+  clear() {
+    this.storage = {}
   }
 }
