@@ -4,7 +4,7 @@ import utils from "../utils"
 
 type ConstructorArgs = {
   name: string,
-  todos: Array<TodoItem>,
+  todos: Array<TodoItem>
 }
 
 export default class TodoListGroup {

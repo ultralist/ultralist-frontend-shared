@@ -1,7 +1,7 @@
 // @flow
 import { Storeable } from "./storeable"
 
-import TodoListModel from "../models/todoList"
+import TodoListModel, { createTodoListFromJSON } from "../models/todoList"
 
 export default class TodoListStorage {
   storage: Storeable
@@ -10,12 +10,16 @@ export default class TodoListStorage {
     this.storage = storage
   }
 
+  loadTodoLists(): TodoListModel[] {
+    return this.storage.load("todolists").map(t => createTodoListFromJSON(t))
+  }
+
   loadTodoList(uuid: string): ?TodoListModel {
-    return this.storage.load("todolists").find(list => list.uuid === uuid)
+    return this.loadTodoLists().find(list => list.uuid === uuid)
   }
 
   loadFirstTodoList(): TodoListModel {
-    return this.storage.load("todolists")[0]
+    return this.loadTodoLists()[0]
   }
 
   saveTodoList(todoList: TodoListModel) {

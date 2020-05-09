@@ -7,7 +7,7 @@ export default class ModalStorage {
   }
 
   isModalOpen(): boolean {
-    return this.storage.load("modalOpen") === "true"
+    return this.storage.load("modalOpen") === true
   }
 
   setModalIsOpen(open: boolean) {

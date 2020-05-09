@@ -7,7 +7,7 @@ export default class BrowserStorage implements Storeable {
   }
 
   save(key: string, value: any) {
-    window.localStorage.setItem(key, value)
+    window.localStorage.setItem(key, JSON.stringify(value))
   }
 
   clear() {
