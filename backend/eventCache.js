@@ -1,8 +1,7 @@
 // @flow
 import TodoEvent from "../models/todoEvent"
-import { Cacheable } from "./cacheable"
 
-export default class EventCache implements Cacheable {
+export default class EventCache {
   cache: Array<TodoEvent>
 
   constructor() {
@@ -13,7 +12,6 @@ export default class EventCache implements Cacheable {
   addItem(event: TodoEvent) {
     this.cache.push(event)
     // window.localStorage.setItem("eventCache", this.cache)
-    return null
   }
 
   toJSON(): Array<Object> {
@@ -23,6 +21,5 @@ export default class EventCache implements Cacheable {
   clear() {
     this.cache = []
     // window.localStorage.setItem("eventCache", this.cache)
-    return null
   }
 }

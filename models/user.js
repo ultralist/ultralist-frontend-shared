@@ -14,12 +14,14 @@ export default class User {
   email: string
   imageUrl: string
   uuid: string
+  staus: string
 
   constructor(args: ConstructorArgs) {
     this.name = args.name || ""
     this.token = args.token || ""
     this.email = args.email || ""
     this.imageUrl = args.imageUrl || ""
+    this.status = args.status || ""
     this.uuid = args.uuid || ""
   }
 
@@ -29,6 +31,7 @@ export default class User {
       token: this.token,
       email: this.email,
       uuid: this.uuid,
+      status: this.status,
       imageUrl: this.imageUrl
     }
   }

@@ -1,40 +1,14 @@
-import Cacheable from "./cacheable"
+// @flow
 
-export default class Backend {
-  token: string
+import { Backendable } from "./backendable"
+import { backendUrl } from "../../../constants"
 
-  constructor(token: string) {
-    this.token = token
-  }
-
-  fetchTodoLists() {
-    return this.apiRequest("api/v1/todo_lists", "GET")
-  }
-
-  fetchTodoList(uuid: string) {
-    return this.apiRequest(`api/v1/todo_lists/${uuid}`, "GET")
-  }
-
-  updateTodoList(todolistUUID: string, cache: Cacheable) {
-    return this.apiRequest(`api/v1/todo_lists/${todolistUUID}`, "PUT", {
-      events: cache.toJSON()
-    })
-  }
-
-  createTodoList(uuid: string, name: string) {
-    return this.apiRequest(`api/v1/todo_lists`, "POST", {
-      todolist: {
-        uuid: uuid,
-        name
-      }
-    })
-  }
-
-  apiRequest(path: string, method: string, params: object = {}) {
+export default class ApiBackend implements Backendable {
+  apiRequest(path: string, method: string, token: string, params: object = {}) {
     return new Promise((resolve, reject) => {
       const headers = new Headers()
-      if (this.token) {
-        headers.append("Authorization", `Bearer ${this.token}`)
+      if (token) {
+        headers.append("Authorization", `Bearer ${token}`)
       }
       headers.append("Accept", "application/json")
       headers.append("Content-Type", "application/json")
@@ -54,7 +28,7 @@ export default class Backend {
         console.log("API request: ", url)
         console.log("API method: ", method)
         console.log("API params: ", params)
-        console.log("Using token: ", this.token)
+        console.log("Using token: ", token)
         console.log("******************************")
       }
 
@@ -66,7 +40,7 @@ export default class Backend {
 
       fetch(url, opts)
         .then(resp => {
-          if (resp.status !== 200) {
+          if (resp.status.toString().startsWith("5")) {
             reject(resp.statusText)
           }
           return resp.json()
@@ -87,14 +61,4 @@ export default class Backend {
     }
     return parts.join("&")
   }
-}
-
-export const backendUrl = () => {
-  if (window.location.hostname === "app.ultralist.io") {
-    return "https://api.ultralist.io"
-  }
-  if (window.location.hostname === "staging.ultralist.io") {
-    return "https://api-stag.ultralist.io"
-  }
-  return "http://localhost:3000"
 }
