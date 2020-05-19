@@ -1,7 +1,7 @@
 // @flow
 
 import EventCache from "./eventCache"
-import Backendable from "./backends/backendable"
+import { Backendable } from "./backends/backendable"
 
 export default class TodoListBackend {
   token: string

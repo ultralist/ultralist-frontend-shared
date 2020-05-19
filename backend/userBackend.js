@@ -1,7 +1,6 @@
 // @flow
 
-import Backendable from "./backends/backendable"
-
+import { Backendable } from "./backends/backendable"
 import UserModel from "../models/user"
 
 export default class UserBackend {
