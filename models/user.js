@@ -5,7 +5,8 @@ type ConstructorArgs = {
   token?: string,
   email?: string,
   imageUrl?: string,
-  uuid?: string
+  uuid?: string,
+  status?: string
 }
 
 export default class User {
@@ -14,7 +15,7 @@ export default class User {
   email: string
   imageUrl: string
   uuid: string
-  staus: string
+  status: string
 
   constructor(args: ConstructorArgs) {
     this.name = args.name || ""

@@ -2,27 +2,43 @@
 
 import EventCache from "./eventCache"
 import { Backendable } from "./backends/backendable"
+import { Storeable } from "../storage/storeable"
+import { createTodoListFromBackend } from "../models/todoList"
 
 export default class TodoListBackend {
   token: string
   backend: Backendable
+  storage: Storeable
 
-  constructor(token: string, backend: Backendable) {
+  constructor(token: string, backend: Backendable, storage: Storeable) {
     this.token = token
     this.backend = backend
+    this.storage = storage
   }
 
   fetchTodoLists() {
-    console.log("fetchTodoLists with token ", this.token)
-    return this.backend.apiRequest("api/v1/todo_lists", "GET", this.token)
+    return new Promise(resolve => {
+      this.backend
+        .apiRequest("api/v1/todo_lists", "GET", this.token)
+        .then(data => {
+          const lists = data.todolists.map(createTodoListFromBackend)
+
+          this.storage.saveTodoLists(lists)
+          resolve(lists)
+        })
+    })
   }
 
   fetchTodoList(uuid: string) {
-    return this.backend.apiRequest(
-      `api/v1/todo_lists/${uuid}`,
-      "GET",
-      this.token
-    )
+    return new Promise(resolve => {
+      this.backend
+        .apiRequest(`api/v1/todo_lists/${uuid}`, "GET", this.token)
+        .then(data => {
+          const list = createTodoListFromBackend(data)
+          this.storage.saveTodoList(list)
+          resolve(list)
+        })
+    })
   }
 
   updateTodoList(todolistUUID: string, cache: EventCache) {
