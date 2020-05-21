@@ -11,7 +11,8 @@ export default class TodoListStorage {
   }
 
   loadTodoLists(): TodoListModel[] {
-    return this.storage.load("todolists").map(t => createTodoListFromJSON(t))
+    const todolists = this.storage.load("todolists")
+    return (todolists || []).map(createTodoListFromJSON)
   }
 
   loadTodoList(uuid: string): ?TodoListModel {
@@ -20,6 +21,17 @@ export default class TodoListStorage {
 
   loadFirstTodoList(): TodoListModel {
     return this.loadTodoLists()[0]
+  }
+
+  setMostRecentTodoList(uuid: string) {
+    this.storage.save("most_recent_todolist_id", uuid)
+  }
+
+  loadMostRecentTodoList(): ?TodoListModel {
+    const mrt = this.loadTodoLists().find(
+      t => t.uuid === this.storage.load("most_recent_todolist_id")
+    )
+    return mrt || this.loadFirstTodoList()
   }
 
   saveTodoList(todoList: TodoListModel) {
