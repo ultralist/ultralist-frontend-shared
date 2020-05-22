@@ -28,7 +28,7 @@ export default class ApiKeysBackend {
 
   deleteKey(key: ApiKey) {
     return this.backend.apiRequest(
-      "api/v1/user/api_keys",
+      `api/v1/user/api_keys/${key.id}`,
       "DELETE",
       this.token,
       key.toJSON()
