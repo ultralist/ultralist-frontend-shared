@@ -19,8 +19,10 @@ export default class UserStorage {
     }
   }
 
-  loadUser(): UserModel {
-    return this.storage.load("user")
+  loadUser(): ?UserModel {
+    const user = this.storage.load("user")
+    if (user) return new UserModel(user)
+    return null
   }
 
   loginUser(user: UserModel) {

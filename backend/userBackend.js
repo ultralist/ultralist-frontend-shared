@@ -12,12 +12,8 @@ export default class UserBackend {
     this.backend = backend
   }
 
-  updateUser(user: UserModel, stripePlan: string, paymentMethodId: string) {
-    return this.backend.apiRequest("api/v1/user", "PUT", this.token, {
-      stripe_plan: stripePlan,
-      payment_method_id: paymentMethodId,
-      user
-    })
+  updateUser(user: UserModel) {
+    return this.backend.apiRequest("api/v1/user", "PUT", this.token, user)
   }
 
   getUser() {
