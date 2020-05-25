@@ -8,15 +8,6 @@ export default class UserStorage {
 
   constructor(storage: Storeable) {
     this.storage = storage
-    const user = this.loadUser()
-    if (user) {
-      ReactGA.set({
-        userId: user.uuid,
-        userName: user.name,
-        userEmail: user.email,
-        status: user.status
-      })
-    }
   }
 
   loadUser(): ?UserModel {
