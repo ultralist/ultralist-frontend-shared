@@ -18,6 +18,14 @@ export default class UserBackend {
     return this.backend.apiRequest("api/v1/user", "PUT", this.token, user)
   }
 
+  deleteUser(user: UserModel) {
+    return this.backend.apiRequest(
+      `api/v1/users/${user.uuid}`,
+      "DELETE",
+      this.token
+    )
+  }
+
   getUser() {
     return new Promise(resolve => {
       return this.backend
