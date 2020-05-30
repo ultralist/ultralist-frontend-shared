@@ -8,8 +8,9 @@ type ConstructorArgs = {
   email?: string,
   imageUrl?: string,
   uuid?: string,
-  status?: string,
-  account?: AccountModel
+  account?: AccountModel,
+  isAccountAdmin?: boolean,
+  lastLoginAt: string
 }
 
 export default class User {
@@ -18,32 +19,34 @@ export default class User {
   email: string
   imageUrl: string
   uuid: string
-  status: string
   account: AccountModel
   isAccountAdmin: boolean
+  lastLoginAt: string
 
   constructor(args: ConstructorArgs) {
     this.name = args.name || ""
     this.token = args.token || ""
     this.email = args.email || ""
     this.imageUrl = args.imageUrl || ""
-    this.status = args.status || ""
     this.uuid = args.uuid || ""
     this.account = args.account
     this.isAccountAdmin = args.isAccountAdmin || false
+    this.lastLoginAt = args.lastLoginAt || ""
   }
 
   toJSON() {
-    return {
+    const ret = {
       name: this.name,
       token: this.token,
       email: this.email,
       uuid: this.uuid,
-      status: this.status,
       imageUrl: this.imageUrl,
       isAccountAdmin: this.isAccountAdmin,
-      account: this.account.toJSON()
+      lastLoginAt: this.lastLoginAt
     }
+    if (this.account) ret.account = this.account.toJSON()
+
+    return ret
   }
 }
 
@@ -53,9 +56,9 @@ export const createUserFromBackend = (backendJSON: Object) => {
     token: backendJSON.token,
     email: backendJSON.email,
     uuid: backendJSON.uuid,
-    status: backendJSON.status,
     imageUrl: backendJSON.image_url,
     isAccountAdmin: backendJSON.is_account_admin,
-    account: createAccountFromBackend(backendJSON.account)
+    lastLoginAt: backendJSON.last_login_at,
+    account: createAccountFromBackend(backendJSON.account || {})
   })
 }
