@@ -1,6 +1,8 @@
 // @flow
 
 import AccountModel, { createAccountFromBackend } from "./account"
+import ApiKeyModel from "./apiKey"
+import WebhookModel from "./webhook"
 
 type ConstructorArgs = {
   name?: string,
@@ -14,22 +16,28 @@ type ConstructorArgs = {
 }
 
 export default class User {
+  account: AccountModel
+  apiKeys: Array<ApiKeyModel>
+  webhooks: Array<WebhookModel>
+
   name: string
   token: string
   email: string
   imageUrl: string
   uuid: string
-  account: AccountModel
   isAccountAdmin: boolean
   lastLoginAt: string
 
   constructor(args: ConstructorArgs) {
+    this.account = args.account
+    this.apiKeys = args.apiKeys || []
+    this.webhooks = args.webhooks || []
+
     this.name = args.name || ""
     this.token = args.token || ""
     this.email = args.email || ""
     this.imageUrl = args.imageUrl || ""
     this.uuid = args.uuid || ""
-    this.account = args.account
     this.isAccountAdmin = args.isAccountAdmin || false
     this.lastLoginAt = args.lastLoginAt || ""
   }
@@ -42,7 +50,9 @@ export default class User {
       uuid: this.uuid,
       imageUrl: this.imageUrl,
       isAccountAdmin: this.isAccountAdmin,
-      lastLoginAt: this.lastLoginAt
+      lastLoginAt: this.lastLoginAt,
+      apiKeys: this.apiKeys.map(key => key.toJSON()),
+      webhooks: this.webhooks.map(hook => hook.toJSON())
     }
     if (this.account) ret.account = this.account.toJSON()
 
@@ -59,6 +69,10 @@ export const createUserFromBackend = (backendJSON: Object) => {
     imageUrl: backendJSON.image_url,
     isAccountAdmin: backendJSON.is_account_admin,
     lastLoginAt: backendJSON.last_login_at,
+    apiKeys: (backendJSON.api_keys || []).map(attrs => new ApiKeyModel(attrs)),
+    webhooks: (backendJSON.webhooks || []).map(
+      attrs => new WebhookModel(attrs)
+    ),
     account: createAccountFromBackend(backendJSON.account || {})
   })
 }
