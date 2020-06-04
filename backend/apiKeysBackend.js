@@ -26,6 +26,15 @@ export default class ApiKeysBackend {
     )
   }
 
+  updateKey(key: ApiKey) {
+    return this.backend.apiRequest(
+      `api/v1/user/api_keys/${key.id}`,
+      "PUT",
+      this.token,
+      key.toJSON()
+    )
+  }
+
   deleteKey(key: ApiKey) {
     return this.backend.apiRequest(
       `api/v1/user/api_keys/${key.id}`,
