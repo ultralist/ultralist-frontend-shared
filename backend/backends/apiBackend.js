@@ -43,9 +43,9 @@ export default class ApiBackend implements Backendable {
           if (resp.status.toString().startsWith("5")) {
             reject(resp.statusText)
           }
-          return resp.json()
+
+          resp.status === 204 ? resolve() : resp.json().then(resolve)
         })
-        .then(json => resolve(json))
         .catch(error => {
           reject(error)
         })

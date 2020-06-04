@@ -8,7 +8,7 @@ type ConstructorArgs = {
   failureCount: number
 }
 
-export default class ApiKey {
+export default class Webhook {
   id: string
   name: string
   url: string
