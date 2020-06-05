@@ -17,6 +17,14 @@ export default class ApiKeysBackend {
     return this.backend.apiRequest("api/v1/user/api_keys", "GET", this.token)
   }
 
+  cliKey() {
+    return this.backend.apiRequest(
+      "api/v1/user/api_keys/cli_key",
+      "GET",
+      this.token
+    )
+  }
+
   createKey(key: ApiKey) {
     return this.backend.apiRequest(
       "api/v1/user/api_keys",
