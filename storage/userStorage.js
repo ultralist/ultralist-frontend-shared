@@ -27,4 +27,20 @@ export default class UserStorage {
   isUserLoggedIn(): boolean {
     return this.loadUser() !== null
   }
+
+  getCLIAuth(): boolean {
+    return this.storage.load("cliAuth")
+  }
+
+  setCLIAuth(cliAuth: boolean) {
+    this.storage.save("cliAuth", cliAuth)
+  }
+
+  getSignup(): boolean {
+    return this.storage.load("isSignup")
+  }
+
+  setSignup(signup: boolean) {
+    this.storage.save("isSignup", signup)
+  }
 }
