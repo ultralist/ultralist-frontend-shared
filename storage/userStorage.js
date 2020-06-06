@@ -36,6 +36,14 @@ export default class UserStorage {
     this.storage.save("cliAuth", cliAuth)
   }
 
+  getCLIAuthCompleted(): boolean {
+    return this.storage.load("cliAuthCompleted")
+  }
+
+  setCLIAuthCompleted(cliAuth: boolean) {
+    this.storage.save("cliAuthCompleted", cliAuth)
+  }
+
   getSignup(): boolean {
     return this.storage.load("isSignup")
   }
