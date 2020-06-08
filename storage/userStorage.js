@@ -1,7 +1,6 @@
 // @flow
 import { Storeable } from "./storeable"
 import UserModel from "../models/user"
-import ReactGA from "react-ga"
 
 export default class UserStorage {
   storage: Storeable
@@ -50,5 +49,21 @@ export default class UserStorage {
 
   setSignup(signup: boolean) {
     this.storage.save("isSignup", signup)
+  }
+
+  getSlackAppInstalled(): boolean {
+    return this.storage.load("slackAppInstalled")
+  }
+
+  setSlackAppInstalled(slackAppInstalled: boolean) {
+    this.storage.save("slackAppInstalled", slackAppInstalled)
+  }
+
+  setSlackCode(code: string) {
+    this.storage.save("slackCode", code)
+  }
+
+  getSlackCode(): string {
+    return this.storage.load("slackCode")
   }
 }
