@@ -10,6 +10,10 @@ export default class BrowserStorage implements Storeable {
     window.localStorage.setItem(key, JSON.stringify(value))
   }
 
+  unset(key: string) {
+    window.localStorage.removeItem(key)
+  }
+
   clear() {
     window.localStorage.clear()
   }

@@ -4,7 +4,7 @@ import { Backendable } from "./backends/backendable"
 
 import Webhook from "../models/webhook"
 
-export default class ApiKeysBackend {
+export default class WebhooksBackend {
   token: string
   backend: Backendable
 
