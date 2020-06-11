@@ -32,10 +32,13 @@ export default class SlackUsersBackend {
       "POST",
       this.token,
       {
-        slack_user_id: slackUser.slackUserId,
-        slack_user_name: slackUser.slackUserName,
-        slack_team_id: slackUser.slackTeamId,
-        slack_team_domain: slackUser.slackTeamDomain
+        slack_user: {
+          slack_user_id: slackUser.slackUserId,
+          slack_user_name: slackUser.slackUserName,
+          slack_team_id: slackUser.slackTeamId,
+          slack_team_domain: slackUser.slackTeamDomain,
+          todo_list_uuid: slackUser.todoListUUID
+        }
       }
     )
   }
