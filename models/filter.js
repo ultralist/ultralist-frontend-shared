@@ -1,14 +1,11 @@
 // @flow
 import TodoItemModel from "./todoItem"
 import TodoListGroup from "./todoListGroup"
-import { FILTER_KEY } from "../constants"
 
 import filterTodos from "./logic/filterTodos"
 import applyGrouping from "./logic/grouper"
 
 type ConstructorArgs = {
-  contexts?: Array<string>,
-  projects?: Array<string>,
   subjectContains?: string,
   archived?: boolean,
   isPriority?: boolean,
@@ -19,8 +16,6 @@ type ConstructorArgs = {
 }
 
 export default class Filter {
-  contexts: Array<string> | null
-  projects: Array<string> | null
   subjectContains: string | null
   archived: boolean | null
   isPriority: boolean | null
@@ -29,8 +24,6 @@ export default class Filter {
   group: string | null
 
   constructor(args: ConstructorArgs) {
-    this.contexts = args.contexts || null
-    this.projects = args.projects || null
     this.subjectContains = args.subjectContains || null
     this.archived = args.archived || null
     this.isPriority = args.isPriority || null
@@ -145,8 +138,6 @@ export default class Filter {
 
   toJSON() {
     return {
-      contexts: this.contexts,
-      projects: this.projects,
       subjectContains: this.subjectContains,
       archived: this.archived,
       isPriority: this.isPriority,

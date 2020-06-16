@@ -25,20 +25,6 @@ const filterTodos = (
   }
 
   return todos.filter(todo => {
-    if (filter.contexts !== null)
-      if (filter.contexts.length === 0) {
-        if (todo.contexts.length > 0) return false
-      } else {
-        if (!filter.contexts.some(c => todo.contexts.includes(c))) return false
-      }
-
-    if (filter.projects !== null)
-      if (filter.projects.length === 0) {
-        if (todo.projects.length > 0) return false
-      } else {
-        if (!filter.projects.some(c => todo.projects.includes(c))) return false
-      }
-
     if (filter.subjectContains)
       if (!filterSubject(filter.subjectContains, todo)) return false
 
