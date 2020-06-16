@@ -59,7 +59,11 @@ export default class Filter {
   }
 
   toggleUseCompleted() {
-    this.completed = this.completed === null ? false : this.completed
+    if (this.completed === null) {
+      this.completed = false
+    } else {
+      this.completed = null
+    }
   }
 
   toggleIsPriority() {
