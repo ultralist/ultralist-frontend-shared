@@ -51,15 +51,15 @@ export default class Filter {
   }
 
   toggleCompleted() {
-    if (this.completed) {
-      this.completed = !this.completed
-      return
+    if (this.completed === null) {
+      this.completed = false
+    } else {
+      this.completed = null
     }
-    this.completed = true
   }
 
   toggleUseCompleted() {
-    this.completed = this.completed === null ? true : null
+    this.completed = this.completed === null ? false : this.completed
   }
 
   toggleIsPriority() {
@@ -71,7 +71,11 @@ export default class Filter {
   }
 
   toggleUseIsPriority() {
-    this.isPriority = this.isPriority === null ? true : null
+    if (this.isPriority === null) {
+      this.isPriority = false
+    } else {
+      this.isPriority = null
+    }
   }
 
   toggleArchived() {
@@ -83,7 +87,11 @@ export default class Filter {
   }
 
   toggleUseArchived() {
-    this.archived = this.archived === null ? true : null
+    if (this.archived === null) {
+      this.archived = false
+    } else {
+      this.archived = null
+    }
   }
 
   addSubjectContains(s: string) {
