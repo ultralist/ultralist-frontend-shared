@@ -1,5 +1,7 @@
 // @flow
 
+import FilterModel from "./filter"
+
 type ConstructorArgs = {
   id: string,
   name: string,
@@ -43,6 +45,17 @@ export default class View {
       group: this.group,
       subjectContains: this.subjectContains
     }
+  }
+
+  toFilter() {
+    return new FilterModel({
+      subjectContains: this.subjectContains,
+      archived: this.archived,
+      isPriority: this.isPriority,
+      completed: this.completed,
+      due: this.due,
+      group: this.group
+    })
   }
 }
 
