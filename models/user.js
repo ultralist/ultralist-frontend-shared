@@ -3,6 +3,7 @@
 import AccountModel, { createAccountFromBackend } from "./account"
 import ApiKeyModel from "./apiKey"
 import WebhookModel from "./webhook"
+import ViewModel, { createViewFromBackend } from "./view"
 
 type ConstructorArgs = {
   name?: string,
@@ -19,6 +20,7 @@ export default class User {
   account: AccountModel
   apiKeys: Array<ApiKeyModel>
   webhooks: Array<WebhookModel>
+  views: Array<ViewModel>
 
   name: string
   token: string
@@ -32,6 +34,7 @@ export default class User {
     this.account = args.account
     this.apiKeys = args.apiKeys || []
     this.webhooks = args.webhooks || []
+    this.views = args.views || []
 
     this.name = args.name || ""
     this.token = args.token || ""
@@ -52,7 +55,8 @@ export default class User {
       isAccountAdmin: this.isAccountAdmin,
       lastLoginAt: this.lastLoginAt,
       apiKeys: this.apiKeys.map(key => key.toJSON()),
-      webhooks: this.webhooks.map(hook => hook.toJSON())
+      webhooks: this.webhooks.map(hook => hook.toJSON()),
+      views: this.views.map(view => view.toJSON())
     }
     if (this.account) ret.account = this.account.toJSON()
 
@@ -73,6 +77,7 @@ export const createUserFromBackend = (backendJSON: Object) => {
     webhooks: (backendJSON.webhooks || []).map(
       attrs => new WebhookModel(attrs)
     ),
+    views: (backendJSON.views || []).map(attrs => createViewFromBackend(attrs)),
     account: createAccountFromBackend(backendJSON.account || {})
   })
 }
