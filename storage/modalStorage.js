@@ -9,22 +9,24 @@ export default class ModalStorage {
   }
 
   isModalOpen(name: ?string): boolean {
+    const modals = this.storage.load("modalsOpen")
     if (!name) {
-      return this.storage.load("modalOpen") === true
-    }
+      if (modals === {}) {
+        return false
+      }
 
-    return (
-      this.storage.load("modalOpen") === true &&
-      this.storage.load("modalOpenName") === name
-    )
+      return Object.entries(modals).some(m => m[1])
+    }
   }
 
   getModalOpenName(): string {
-    return this.storage.load("getModalOpenName")
+    const openModal = this.storage.load("modalsOpen").find(m => m.open)
+    return openModal ? openModal.name : ""
   }
 
   setModalIsOpen(open: boolean, name: string) {
-    this.storage.save("modalOpen", open)
-    this.storage.save("modalOpenName", open ? name : null)
+    const modals = this.storage.load("modalsOpen")
+    modals[name] = open
+    this.storage.save("modalsOpen", modals)
   }
 }
