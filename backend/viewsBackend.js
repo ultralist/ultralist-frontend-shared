@@ -27,12 +27,17 @@ export default class ViewsBackend {
   }
 
   createView(view: ViewModel) {
-    return this.backend.apiRequest(
-      "api/v1/user/views",
-      "POST",
-      this.token,
-      view.toJSON()
-    )
+    return this.backend.apiRequest("api/v1/user/views", "POST", this.token, {
+      view: {
+        name: view.name,
+        archived: view.archived,
+        completed: view.completed,
+        is_priority: view.isPriority,
+        due: view.due,
+        group: view.group,
+        subjectContains: view.subjectContains
+      }
+    })
   }
 
   deleteView(view: ViewModel) {

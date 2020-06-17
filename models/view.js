@@ -18,7 +18,7 @@ export default class View {
   name: string
   archived: ?boolean
   completed: ?boolean
-  is_priority: ?boolean
+  isPriority: ?boolean
   due: ?string
   group: ?string
   subjectContains: ?string
