@@ -36,9 +36,7 @@ export default class TodoItem {
     this.archived = args.archived || false
     this.isPriority = args.isPriority || false
     this.completedDate = args.completedDate || null
-    this.subject = args.subject || ""
-    this.contexts = args.contexts || []
-    this.projects = args.projects || []
+    this.setSubject(args.subject || "")
     this.due = args.due || null
     this.notes = args.notes || []
   }

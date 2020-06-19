@@ -1,7 +1,9 @@
 // @flow
-import { BY_CONTEXT, BY_PROJECT } from "../../constants"
 import TodoItemModel from "../todoItem"
 import TodoListGroup from "../todoListGroup"
+
+const BY_CONTEXT = "context"
+const BY_PROJECT = "project"
 
 const applyGrouping = (
   todos: Array<TodoItemModel>,
