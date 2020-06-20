@@ -2,7 +2,7 @@
 
 import { Backendable } from "./backends/backendable"
 
-import ViewModel from "../models/view"
+import FilterModel from "../models/filter"
 
 export default class ViewsBackend {
   token: string
@@ -17,7 +17,7 @@ export default class ViewsBackend {
     return this.backend.apiRequest("api/v1/user/views", "GET", this.token)
   }
 
-  updateView(view: ViewModel) {
+  updateView(view: FilterModel) {
     return this.backend.apiRequest(
       `api/v1/user/views/${view.id}`,
       "PUT",
@@ -26,7 +26,7 @@ export default class ViewsBackend {
     )
   }
 
-  createView(view: ViewModel) {
+  createView(view: FilterModel) {
     return this.backend.apiRequest("api/v1/user/views", "POST", this.token, {
       view: {
         name: view.name,
@@ -40,7 +40,7 @@ export default class ViewsBackend {
     })
   }
 
-  deleteView(view: ViewModel) {
+  deleteView(view: FilterModel) {
     return this.backend.apiRequest(
       `api/v1/user/views/${view.id}`,
       "DELETE",

@@ -7,6 +7,8 @@ import applyGrouping from "./logic/grouper"
 
 type ConstructorArgs = {
   subjectContains?: string,
+  id: string,
+  name: string,
   archived?: boolean,
   isPriority?: boolean,
   completed?: boolean,
@@ -16,19 +18,23 @@ type ConstructorArgs = {
 }
 
 export default class Filter {
-  subjectContains: string | null
-  archived: boolean | null
-  isPriority: boolean | null
-  completed: boolean | null
-  due: string | null
-  group: string | null
+  subjectContains: ?string
+  id: ?string
+  name: ?string
+  archived: ?boolean
+  isPriority: ?boolean
+  completed: ?boolean
+  due: ?string
+  group: ?string
 
   constructor(args: ConstructorArgs) {
     this.subjectContains = args.subjectContains || null
     this.archived = args.archived || null
     this.isPriority = args.isPriority || null
     this.completed = args.completed || null
+    this.id = args.id || null
     this.due = args.due || null
+    this.name = args.name || null
     this.group = args.group || null
 
     if (args.isPriority === undefined) {
@@ -161,7 +167,21 @@ export default class Filter {
       isPriority: this.isPriority,
       completed: this.completed,
       due: this.due,
+      name: this.name,
       group: this.group
     }
   }
+}
+
+export const createFilterFromBackend = (backendJSON: Object) => {
+  return new Filter({
+    id: backendJSON.id,
+    name: backendJSON.name,
+    archived: backendJSON.archived,
+    completed: backendJSON.completed,
+    isPriority: backendJSON.is_priority,
+    due: backendJSON.due,
+    group: backendJSON.group,
+    subjectContains: backendJSON.subject_contains
+  })
 }

@@ -3,7 +3,7 @@
 import AccountModel, { createAccountFromBackend } from "./account"
 import ApiKeyModel from "./apiKey"
 import WebhookModel from "./webhook"
-import ViewModel, { createViewFromBackend } from "./view"
+import FilterModel, { createFilterFromBackend } from "./filter"
 
 type ConstructorArgs = {
   name?: string,
@@ -20,7 +20,7 @@ export default class User {
   account: AccountModel
   apiKeys: Array<ApiKeyModel>
   webhooks: Array<WebhookModel>
-  views: Array<ViewModel>
+  views: Array<FilterModel>
 
   name: string
   token: string
@@ -77,7 +77,9 @@ export const createUserFromBackend = (backendJSON: Object) => {
     webhooks: (backendJSON.webhooks || []).map(
       attrs => new WebhookModel(attrs)
     ),
-    views: (backendJSON.views || []).map(attrs => createViewFromBackend(attrs)),
+    views: (backendJSON.views || []).map(attrs =>
+      createFilterFromBackend(attrs)
+    ),
     account: createAccountFromBackend(backendJSON.account || {})
   })
 }
