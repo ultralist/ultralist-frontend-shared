@@ -126,6 +126,9 @@ export default class Filter {
 
     if (this.due !== null) str.push(`due:${this.due}`)
 
+    if (this.group !== null && this.group !== "all")
+      str.push(`group:${this.group}`)
+
     return str
   }
 
@@ -142,6 +145,9 @@ export default class Filter {
         break
       case str.startsWith("due:"):
         this.due = null
+        break
+      case str.startsWith("group:"):
+        this.group = null
         break
       default:
         this.subjectContains = null
