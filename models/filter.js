@@ -163,6 +163,7 @@ export default class Filter {
   toJSON() {
     return {
       subjectContains: this.subjectContains,
+      id: this.id,
       archived: this.archived,
       isPriority: this.isPriority,
       completed: this.completed,
