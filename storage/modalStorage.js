@@ -25,7 +25,7 @@ export default class ModalStorage {
   }
 
   setModalIsOpen(open: boolean, name: string) {
-    const modals = this.storage.load("modalsOpen")
+    const modals = this.storage.load("modalsOpen") || {}
     modals[name] = open
     this.storage.save("modalsOpen", modals)
   }
