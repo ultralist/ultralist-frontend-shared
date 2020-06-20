@@ -57,11 +57,11 @@ export default class Filter {
   }
 
   toggleCompleted() {
-    if (this.completed === null) {
-      this.completed = false
-    } else {
-      this.completed = null
+    if (this.completed) {
+      this.completed = !this.completed
+      return
     }
+    this.completed = true
   }
 
   toggleUseCompleted() {
