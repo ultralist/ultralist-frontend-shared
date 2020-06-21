@@ -45,6 +45,11 @@ export default class User {
     this.lastLoginAt = args.lastLoginAt || ""
   }
 
+  defaultFilter() {
+    const defaultView = this.views.find(v => v.isDefault)
+    return defaultView ? defaultView : {}
+  }
+
   toJSON() {
     const ret = {
       name: this.name,

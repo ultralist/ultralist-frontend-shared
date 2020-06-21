@@ -163,6 +163,23 @@ export default class Filter {
     }
   }
 
+  isEmpty() {
+    const isBlank = attr => {
+      return attr === null || attr === false || attr === ""
+    }
+
+    return (
+      isBlank(this.subjectContains) &&
+      isBlank(this.archived) &&
+      isBlank(this.isPriority) &&
+      isBlank(this.completed) &&
+      isBlank(this.due) &&
+      isBlank(this.name) &&
+      isBlank(this.isDefault) &&
+      isBlank(this.group)
+    )
+  }
+
   toJSON() {
     return {
       subjectContains: this.subjectContains,
