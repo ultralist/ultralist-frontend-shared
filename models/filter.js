@@ -8,6 +8,7 @@ import applyGrouping from "./logic/grouper"
 type ConstructorArgs = {
   subjectContains?: string,
   id: string,
+  isDefault: boolean,
   name: string,
   archived?: boolean,
   isPriority?: boolean,
@@ -20,6 +21,7 @@ type ConstructorArgs = {
 export default class Filter {
   subjectContains: ?string
   id: ?string
+  isDefault: boolean
   name: ?string
   archived: ?boolean
   isPriority: ?boolean
@@ -36,6 +38,7 @@ export default class Filter {
     this.due = args.due || null
     this.name = args.name || null
     this.group = args.group || null
+    this.isDefault = args.isDefault || null
 
     if (args.isPriority === undefined) {
       this.isPriority = null
@@ -169,6 +172,7 @@ export default class Filter {
       completed: this.completed,
       due: this.due,
       name: this.name,
+      isDefault: this.isDefault,
       group: this.group
     }
   }
@@ -183,6 +187,7 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     isPriority: backendJSON.is_priority,
     due: backendJSON.due,
     group: backendJSON.group,
+    isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains
   })
 }

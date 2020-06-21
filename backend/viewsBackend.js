@@ -22,7 +22,18 @@ export default class ViewsBackend {
       `api/v1/user/views/${view.id}`,
       "PUT",
       this.token,
-      view.toJSON()
+      {
+        view: {
+          subject_contains: view.subjectContains,
+          archived: view.archived,
+          is_priority: view.isPriority,
+          completed: view.completed,
+          due: view.due,
+          name: view.name,
+          is_default: view.isDefault,
+          group: view.group
+        }
+      }
     )
   }
 
@@ -35,7 +46,7 @@ export default class ViewsBackend {
         is_priority: view.isPriority,
         due: view.due,
         group: view.group,
-        subjectContains: view.subjectContains
+        subject_contains: view.subjectContains
       }
     })
   }
@@ -44,8 +55,7 @@ export default class ViewsBackend {
     return this.backend.apiRequest(
       `api/v1/user/views/${view.id}`,
       "DELETE",
-      this.token,
-      view.toJSON()
+      this.token
     )
   }
 }
