@@ -143,13 +143,13 @@ export default class Filter {
 
   removeFilterString(str: string) {
     switch (true) {
-      case str == "is:archived" || str == "not:archived":
+      case str === "is:archived" || str === "not:archived":
         this.archived = null
         break
-      case str == "is:priority" || str == "not:priority":
+      case str == "is:priority" || str === "not:priority":
         this.isPriority = null
         break
-      case str == "is:completed" || str == "not:completed":
+      case str === "is:completed" || str === "not:completed":
         this.completed = null
         break
       case str.startsWith("due:"):
