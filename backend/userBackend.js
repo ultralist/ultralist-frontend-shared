@@ -15,7 +15,9 @@ export default class UserBackend {
   }
 
   updateUser(user: UserModel) {
-    return this.backend.apiRequest("api/v1/user", "PUT", this.token, user)
+    return this.backend.apiRequest("api/v1/user", "PUT", this.token, {
+      user: { time_zone: user.timeZone, name: user.name }
+    })
   }
 
   deleteUser(user: UserModel) {

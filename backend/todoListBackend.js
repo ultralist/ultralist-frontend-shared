@@ -60,11 +60,4 @@ export default class TodoListBackend {
       }
     })
   }
-
-  updateUser(user: UserModel, stripeToken: string) {
-    return this.backend.apiRequest("api/v1/user", "PUT", this.token, {
-      stripe_token: stripeToken,
-      user
-    })
-  }
 }

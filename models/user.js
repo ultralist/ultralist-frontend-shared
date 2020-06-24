@@ -13,7 +13,8 @@ type ConstructorArgs = {
   uuid?: string,
   account?: AccountModel,
   isAccountAdmin?: boolean,
-  lastLoginAt: string
+  lastLoginAt: string,
+  timeZone: string
 }
 
 export default class User {
@@ -29,6 +30,7 @@ export default class User {
   uuid: string
   isAccountAdmin: boolean
   lastLoginAt: string
+  timeZone: string
 
   constructor(args: ConstructorArgs) {
     this.account = args.account
@@ -43,6 +45,7 @@ export default class User {
     this.uuid = args.uuid || ""
     this.isAccountAdmin = args.isAccountAdmin || false
     this.lastLoginAt = args.lastLoginAt || ""
+    this.timeZone = args.timeZone
   }
 
   defaultFilter() {
@@ -59,6 +62,7 @@ export default class User {
       imageUrl: this.imageUrl,
       isAccountAdmin: this.isAccountAdmin,
       lastLoginAt: this.lastLoginAt,
+      timeZone: this.timeZone,
       apiKeys: this.apiKeys.map(key => key.toJSON()),
       webhooks: this.webhooks.map(hook => hook.toJSON()),
       views: this.views.map(view => view.toJSON())
@@ -78,6 +82,7 @@ export const createUserFromBackend = (backendJSON: Object) => {
     imageUrl: backendJSON.image_url,
     isAccountAdmin: backendJSON.is_account_admin,
     lastLoginAt: backendJSON.last_login_at,
+    timeZone: backendJSON.time_zone,
     apiKeys: (backendJSON.api_keys || []).map(attrs => new ApiKeyModel(attrs)),
     webhooks: (backendJSON.webhooks || []).map(
       attrs => new WebhookModel(attrs)
