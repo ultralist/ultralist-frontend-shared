@@ -66,12 +66,14 @@ export default class User {
       isAccountAdmin: this.isAccountAdmin,
       lastLoginAt: this.lastLoginAt,
       timeZone: this.timeZone,
-      apiKeys: this.apiKeys.map(key => key.toJSON()),
-      webhooks: this.webhooks.map(hook => hook.toJSON()),
-      views: this.views.map(view => view.toJSON()),
-      slackUsers: this.slackUsers.map(slackUser => slackUser.toJSON())
+      apiKeys: this.apiKeys.map(key => new ApiKeyModel(key).toJSON()),
+      webhooks: this.webhooks.map(hook => new WebhookModel(hook).toJSON()),
+      views: this.views.map(view => new FilterModel(view).toJSON()),
+      slackUsers: this.slackUsers.map(slackUser =>
+        new SlackUserModel(slackUser).toJSON()
+      )
     }
-    if (this.account) ret.account = this.account.toJSON()
+    if (this.account) ret.account = new AccountModel(this.account).toJSON()
 
     return ret
   }

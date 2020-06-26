@@ -22,7 +22,12 @@ export default class SlackUsersBackend {
       `api/v1/user/slack_users/${slackUser.id}`,
       "PUT",
       this.token,
-      slackUser.toJSON()
+      {
+        slack_user: {
+          todo_list_uuid: slackUser.todoListID,
+          receives_agenda: slackUser.receivesAgenda
+        }
+      }
     )
   }
 

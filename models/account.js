@@ -36,7 +36,7 @@ export default class Account {
       inviteCode: this.inviteCode,
       errors: this.errors,
       name: this.name,
-      users: this.users.map(user => user.toJSON()),
+      users: this.users.map(user => new UserModel(user).toJSON()),
       cancelledAt: this.cancelledAt
     }
   }

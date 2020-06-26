@@ -15,8 +15,12 @@ export default class UserStorage {
     return null
   }
 
-  loginUser(user: UserModel) {
+  saveUser(user: UserModel) {
     this.storage.save("user", user)
+  }
+
+  loginUser(user: UserModel) {
+    this.saveUser(user)
   }
 
   logoutUser() {
