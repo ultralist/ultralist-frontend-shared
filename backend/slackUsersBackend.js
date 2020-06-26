@@ -37,7 +37,7 @@ export default class SlackUsersBackend {
           slack_user_name: slackUser.slackUserName,
           slack_team_id: slackUser.slackTeamId,
           slack_team_domain: slackUser.slackTeamDomain,
-          todo_list_uuid: slackUser.todoListUUID
+          todo_list_uuid: slackUser.todoListID
         }
       }
     )
