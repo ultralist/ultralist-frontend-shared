@@ -42,7 +42,7 @@ export default class TodoList {
       name: this.name,
       uuid: this.uuid,
       updatedAt: this.updatedAt,
-      todos: this.todos.map(todo => todo.toJSON())
+      todos: this.todos.map(todo => new TodoItemModel(todo).toJSON())
     }
   }
 }

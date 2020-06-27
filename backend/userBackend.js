@@ -6,12 +6,10 @@ import UserModel, { createUserFromBackend } from "../models/user"
 export default class UserBackend {
   token: string
   backend: Backendable
-  storage: Storeable
 
-  constructor(token: string, backend: Backendable, storage: Storeable) {
+  constructor(token: string, backend: Backendable) {
     this.token = token
     this.backend = backend
-    this.storage = storage
   }
 
   updateUser(user: UserModel) {
@@ -33,9 +31,7 @@ export default class UserBackend {
       return this.backend
         .apiRequest("/api/v1/user", "GET", this.token)
         .then(data => {
-          const user = createUserFromBackend(data)
-          this.storage.loginUser(user)
-          resolve(user)
+          resolve(createUserFromBackend(data))
         })
     })
   }
