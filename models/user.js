@@ -5,6 +5,7 @@ import ApiKeyModel from "./apiKey"
 import WebhookModel from "./webhook"
 import FilterModel, { createFilterFromBackend } from "./filter"
 import SlackUserModel, { createSlackUserFromBackend } from "./slackUser"
+import TodoListModel, { createTodoListFromBackend } from "./todoList"
 
 type ConstructorArgs = {
   name?: string,
@@ -24,6 +25,7 @@ export default class User {
   webhooks: Array<WebhookModel>
   views: Array<FilterModel>
   slackUsers: Array<SlackUserModel>
+  todoLists: Array<TodoListModel>
 
   name: string
   token: string
@@ -40,6 +42,7 @@ export default class User {
     this.webhooks = args.webhooks || []
     this.views = args.views || []
     this.slackUsers = args.slackUsers || []
+    this.todoLists = args.todoLists || []
 
     this.name = args.name || ""
     this.token = args.token || ""
@@ -71,6 +74,9 @@ export default class User {
       views: this.views.map(view => new FilterModel(view).toJSON()),
       slackUsers: this.slackUsers.map(slackUser =>
         new SlackUserModel(slackUser).toJSON()
+      ),
+      todoLists: this.todoLists.map(todoList =>
+        new TodoListModel(todoList).toJSON()
       )
     }
     if (this.account) ret.account = new AccountModel(this.account).toJSON()
@@ -99,6 +105,9 @@ export const createUserFromBackend = (backendJSON: Object) => {
     slackUsers: (backendJSON.slack_users || []).map(attrs =>
       createSlackUserFromBackend(attrs)
     ),
-    account: createAccountFromBackend(backendJSON.account || {})
+    account: createAccountFromBackend(backendJSON.account || {}),
+    todoLists: (backendJSON.todo_lists || []).map(attrs =>
+      createTodoListFromBackend(attrs)
+    )
   })
 }

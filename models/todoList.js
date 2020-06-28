@@ -19,7 +19,7 @@ export default class TodoList {
   constructor(args: ConstructorArgs) {
     this.name = args.name || "New List"
     this.uuid = args.uuid || utils.generateUuid()
-    this.updatedAt = args.updatedAt || new Date()
+    this.updatedAt = args.updatedAt
     this.todos = args.todos || []
   }
 
@@ -42,7 +42,7 @@ export default class TodoList {
       name: this.name,
       uuid: this.uuid,
       updatedAt: this.updatedAt,
-      todos: this.todos.map(todo => todo.toJSON())
+      todos: this.todos.map(todo => new TodoItemModel(todo).toJSON())
     }
   }
 }
@@ -65,7 +65,7 @@ export const createTodoListFromBackend = (backendJSON: Object) => {
   return new TodoList({
     name: backendJSON.name,
     todos: backendJSON.todo_items_attributes.map(i => new TodoItemModel(i)),
-    updatedAt: parseISO(backendJSON.updated_at),
+    updatedAt: backendJSON.updated_at,
     uuid: backendJSON.uuid
   })
 }
@@ -74,7 +74,7 @@ export const createTodoListFromJSON = (storageJSON: Object) => {
   return new TodoList({
     name: storageJSON.name,
     todos: storageJSON.todos.map(i => new TodoItemModel(i)),
-    updatedAt: parseISO(storageJSON.updatedAt),
+    updatedAt: storageJSON.updatedAt,
     uuid: storageJSON.uuid
   })
 }
