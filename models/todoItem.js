@@ -91,8 +91,10 @@ export default class TodoItem {
     this.contexts = []
 
     subject.split(" ").forEach(word => {
-      if (word.startsWith("+")) this.projects.push(word.substring(1))
-      if (word.startsWith("@")) this.contexts.push(word.substring(1))
+      if (word.startsWith("+") && word !== "+")
+        this.projects.push(word.substring(1))
+      if (word.startsWith("@") && word !== "@")
+        this.contexts.push(word.substring(1))
     })
   }
 
