@@ -115,9 +115,12 @@ export default class Filter {
     }
   }
 
-  applyFilter(todos: Array<TodoItemModel>): Array<TodoListGroup> {
-    const filteredTodos = filterTodos(todos, this)
-    return applyGrouping(filteredTodos, this.group)
+  applyFilter(todos: Array<TodoItemModel>): Array<TodoItemModel> {
+    return filterTodos(todos, this)
+  }
+
+  applyGrouping(todos: Array<TodoItemModel>): Array<TodoGroup> {
+    return applyGrouping(todos, this.group)
   }
 
   toFilterStrings(): Array<string> {
