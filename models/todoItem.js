@@ -12,6 +12,7 @@ type ConstructorArgs = {
   isPriority?: boolean,
   completedDate?: string | null,
   subject?: string,
+  status?: string,
   due?: string | null,
   notes?: Array<string>
 }
@@ -26,6 +27,7 @@ export default class TodoItem {
   subject: string
   contexts: Array<string>
   projects: Array<string>
+  status: ?string
   due: string | null
   notes: Array<string>
 
@@ -38,6 +40,7 @@ export default class TodoItem {
     this.completedDate = args.completedDate || null
     this.setSubject(args.subject || "")
     this.due = args.due || null
+    this.status = args.status || null
     this.notes = args.notes || []
   }
 
@@ -113,6 +116,7 @@ export default class TodoItem {
       subject: this.subject,
       contexts: this.contexts,
       projects: this.projects,
+      status: this.status,
       due: this.due,
       notes: this.notes
     }
