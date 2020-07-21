@@ -113,7 +113,6 @@ const getProjects = (todos: Array<TodoItemModel>) => {
 
 const getStatuses = (todos: Array<TodoItemModel>) => {
   const statuses = []
-  console.log("todos = ", todos)
   if (todos.map(t => t.status).includes(null)) {
     statuses.push("No status")
   }
