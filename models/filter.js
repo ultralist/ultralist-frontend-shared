@@ -119,8 +119,13 @@ export default class Filter {
     return filterTodos(todos, this)
   }
 
-  applyGrouping(todos: Array<TodoItemModel>): Array<TodoGroup> {
-    return applyGrouping(todos, this.group)
+  applyGrouping(
+    todos: Array<TodoItemModel>,
+    grouping: ?string
+  ): Array<TodoListGroup> {
+    return grouping
+      ? applyGrouping(todos, grouping)
+      : applyGrouping(todos, this.group)
   }
 
   toFilterStrings(): Array<string> {

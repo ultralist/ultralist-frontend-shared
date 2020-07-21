@@ -4,6 +4,7 @@ import TodoListGroup from "../todoListGroup"
 
 const BY_CONTEXT = "context"
 const BY_PROJECT = "project"
+const BY_STATUS = "status"
 
 const applyGrouping = (
   todos: Array<TodoItemModel>,
@@ -14,6 +15,8 @@ const applyGrouping = (
       return sort(byContext(todos))
     case BY_PROJECT:
       return sort(byProject(todos))
+    case BY_STATUS:
+      return byStatus(todos)
     default:
       return byAll(todos)
   }
@@ -39,6 +42,19 @@ const byProject = (todos: Array<TodoItemModel>): Array<TodoListGroup> => {
       new TodoListGroup({
         name: project,
         todos: todosWithProject(todos, project)
+      })
+    )
+  })
+  return grouped
+}
+
+const byStatus = (todos: Array<TodoItemModel>): Array<TodoListGroup> => {
+  const grouped = []
+  getStatuses(todos).forEach(status => {
+    grouped.push(
+      new TodoListGroup({
+        name: status,
+        todos: todosWithStatus(todos, status)
       })
     )
   })
@@ -95,11 +111,34 @@ const getProjects = (todos: Array<TodoItemModel>) => {
   return projects
 }
 
+const getStatuses = (todos: Array<TodoItemModel>) => {
+  const statuses = []
+  console.log("todos = ", todos)
+  if (todos.map(t => t.status).includes(null)) {
+    statuses.push("No status")
+  }
+
+  todos.forEach(todo => {
+    if (todo.status && !statuses.includes(todo.status))
+      statuses.push(todo.status)
+  })
+  return statuses
+}
+
 const todosWithProject = (todos: Array<TodoItemModel>, project: string) => {
   const ret = []
   todos.forEach(todo => {
     if (todo.projects.includes(project)) ret.push(todo)
     if (project === "No projects" && todo.projects.length === 0) ret.push(todo)
+  })
+  return ret
+}
+
+const todosWithStatus = (todos: Array<TodoItemModel>, status: string) => {
+  const ret = []
+  todos.forEach(todo => {
+    if (todo.status === status) ret.push(todo)
+    if (status === "No status" && todo.status === null) ret.push(todo)
   })
   return ret
 }
