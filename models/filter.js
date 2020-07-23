@@ -3,7 +3,7 @@ import TodoItemModel from "./todoItem"
 import TodoListGroup from "./todoListGroup"
 
 import filterTodos from "./logic/filterTodos"
-import applyGrouping from "./logic/grouper"
+import { applyGrouping, applyKanbanGrouping } from "./logic/grouper"
 
 type ConstructorArgs = {
   subjectContains?: string,
@@ -15,7 +15,8 @@ type ConstructorArgs = {
   completed?: boolean,
   due?: string,
   group?: string,
-  filterString?: string
+  filterString?: string,
+  kanbanColumns: string[]
 }
 
 export default class Filter {
@@ -28,6 +29,7 @@ export default class Filter {
   completed: ?boolean
   due: ?string
   group: ?string
+  kanbanColumns: string[]
 
   constructor(args: ConstructorArgs) {
     this.subjectContains = args.subjectContains || null
@@ -39,6 +41,7 @@ export default class Filter {
     this.name = args.name || null
     this.group = args.group || null
     this.isDefault = args.isDefault || null
+    this.kanbanColumns = args.kanbanColumns || []
 
     if (args.isPriority === undefined) {
       this.isPriority = null
@@ -128,6 +131,10 @@ export default class Filter {
       : applyGrouping(todos, this.group)
   }
 
+  applyKanbanGrouping(todos: Array<TodoItemModel>) {
+    return applyKanbanGrouping(todos, this.kanbanColumns)
+  }
+
   toFilterStrings(): Array<string> {
     const str = []
     if (this.subjectContains) str.push(this.subjectContains)
@@ -198,7 +205,8 @@ export default class Filter {
       due: this.due,
       name: this.name,
       isDefault: this.isDefault,
-      group: this.group
+      group: this.group,
+      kanbanColumns: this.kanbanColumns
     }
   }
 }
@@ -213,6 +221,7 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     due: backendJSON.due,
     group: backendJSON.group,
     isDefault: backendJSON.is_default,
-    subjectContains: backendJSON.subject_contains
+    subjectContains: backendJSON.subject_contains,
+    kanbanColumns: backendJSON.kanban_columns
   })
 }

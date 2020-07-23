@@ -61,8 +61,10 @@ export default class TodoItem {
 
     if (this.completed) {
       this.completedDate = format(new Date(), "yyyy-MM-dd")
+      this.status = "completed"
     } else {
       this.completedDate = null
+      this.status = null
     }
   }
 

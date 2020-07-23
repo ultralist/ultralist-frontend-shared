@@ -6,7 +6,7 @@ const BY_CONTEXT = "context"
 const BY_PROJECT = "project"
 const BY_STATUS = "status"
 
-const applyGrouping = (
+export const applyGrouping = (
   todos: Array<TodoItemModel>,
   grouping: string | null
 ): Array<TodoListGroup> => {
@@ -20,6 +20,18 @@ const applyGrouping = (
     default:
       return byAll(todos)
   }
+}
+
+export const applyKanbanGrouping = (
+  todos: Array<TodoItemModel>,
+  kanbanColumns: string[]
+): Array<TodoListGroup> => {
+  return kanbanColumns.map(column => {
+    return new TodoListGroup({
+      name: column,
+      todos: todosWithStatus(todos, column)
+    })
+  })
 }
 
 const byContext = (todos: Array<TodoItemModel>): Array<TodoListGroup> => {
@@ -137,9 +149,7 @@ const todosWithStatus = (todos: Array<TodoItemModel>, status: string) => {
   const ret = []
   todos.forEach(todo => {
     if (todo.status === status) ret.push(todo)
-    if (status === "No status" && todo.status === null) ret.push(todo)
+    if (status === "none" && todo.status === null) ret.push(todo)
   })
   return ret
 }
-
-export default applyGrouping
