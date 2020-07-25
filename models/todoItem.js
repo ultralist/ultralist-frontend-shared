@@ -103,6 +103,16 @@ export default class TodoItem {
     })
   }
 
+  setStatus(status: string) {
+    if (
+      (status === "completed" && !this.completed) ||
+      (status !== "completed" && this.completed)
+    ) {
+      this.toggleCompleted()
+    }
+    this.status = status
+  }
+
   deleteNote(note: string) {
     this.notes = this.notes.filter(n => n !== note)
   }
