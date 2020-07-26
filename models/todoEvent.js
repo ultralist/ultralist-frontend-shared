@@ -25,6 +25,7 @@ export default class TodoEvent {
       completedDate: this.todo.completedDate,
       archived: this.todo.archived,
       isPriority: this.todo.isPriority,
+      status: this.todo.status,
       notes: this.todo.notes
       // createdAt: this.todo.createdAt
     }
