@@ -16,6 +16,7 @@ type ConstructorArgs = {
   due?: string,
   group?: string,
   filterString?: string,
+  viewType?: string,
   kanbanColumns: string[]
 }
 
@@ -29,6 +30,7 @@ export default class Filter {
   completed: ?boolean
   due: ?string
   group: ?string
+  viewType: ?string
   kanbanColumns: string[]
 
   constructor(args: ConstructorArgs) {
@@ -41,6 +43,7 @@ export default class Filter {
     this.name = args.name || null
     this.group = args.group || null
     this.isDefault = args.isDefault || null
+    this.viewType = args.viewType || "list"
     this.kanbanColumns = args.kanbanColumns || []
 
     if (args.isPriority === undefined) {
@@ -107,6 +110,14 @@ export default class Filter {
       this.archived = false
     } else {
       this.archived = null
+    }
+  }
+
+  toggleViewType() {
+    if (this.viewType === "kanban") {
+      this.viewType = "list"
+    } else {
+      this.viewType = "kanban"
     }
   }
 
@@ -206,6 +217,7 @@ export default class Filter {
       name: this.name,
       isDefault: this.isDefault,
       group: this.group,
+      viewType: this.viewType,
       kanbanColumns: this.kanbanColumns
     }
   }
@@ -222,6 +234,7 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     group: backendJSON.group,
     isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains,
+    viewType: backendJSON.view_type,
     kanbanColumns: backendJSON.kanban_columns
   })
 }
