@@ -44,7 +44,7 @@ export default class Filter {
     this.group = args.group || null
     this.isDefault = args.isDefault || null
     this.viewType = args.viewType || "list"
-    this.kanbanColumns = args.kanbanColumns || []
+    this.kanbanColumns = args.kanbanColumns || "[]"
 
     if (args.isPriority === undefined) {
       this.isPriority = null
@@ -235,6 +235,6 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains,
     viewType: backendJSON.view_type,
-    kanbanColumns: backendJSON.kanban_columns
+    kanbanColumns: JSON.parse(backendJSON.kanban_columns)
   })
 }
