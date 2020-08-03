@@ -17,7 +17,7 @@ type ConstructorArgs = {
   group?: string,
   filterString?: string,
   viewType?: string,
-  kanbanColumns: string[]
+  kanbanColumnsString: string
 }
 
 export default class Filter {
@@ -31,7 +31,7 @@ export default class Filter {
   due: ?string
   group: ?string
   viewType: ?string
-  kanbanColumns: string[]
+  kanbanColumnsString: string
 
   constructor(args: ConstructorArgs) {
     this.subjectContains = args.subjectContains || null
@@ -44,7 +44,7 @@ export default class Filter {
     this.group = args.group || null
     this.isDefault = args.isDefault || null
     this.viewType = args.viewType || "list"
-    this.kanbanColumns = args.kanbanColumns || "[]"
+    this.kanbanColumnsString = args.kanbanColumnsString || "[]"
 
     if (args.isPriority === undefined) {
       this.isPriority = null
@@ -142,8 +142,16 @@ export default class Filter {
       : applyGrouping(todos, this.group)
   }
 
+  kanbanColumns(): string[] {
+    return JSON.parse(this.kanbanColumnsString)
+  }
+
+  setKanbanColumns(columns: string[]): void {
+    this.kanbanColumnsString = JSON.stringify(columns)
+  }
+
   applyKanbanGrouping(todos: Array<TodoItemModel>) {
-    return applyKanbanGrouping(todos, this.kanbanColumns)
+    return applyKanbanGrouping(todos, this.kanbanColumns())
   }
 
   toFilterStrings(): Array<string> {
@@ -218,7 +226,7 @@ export default class Filter {
       isDefault: this.isDefault,
       group: this.group,
       viewType: this.viewType,
-      kanbanColumns: this.kanbanColumns
+      kanbanColumnsString: this.kanbanColumnsString
     }
   }
 }
@@ -235,6 +243,6 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains,
     viewType: backendJSON.view_type,
-    kanbanColumns: JSON.parse(backendJSON.kanban_columns)
+    kanbanColumnsString: backendJSON.kanban_columns
   })
 }

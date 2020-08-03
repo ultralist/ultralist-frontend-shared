@@ -31,7 +31,7 @@ export default class ViewsBackend {
           due: view.due,
           name: view.name,
           is_default: view.isDefault,
-          kanban_columns: JSON.stringify(view.kanbanColumns),
+          kanban_columns: view.kanbanColumnsString,
           view_type: view.viewType,
           group: view.group
         }
@@ -48,7 +48,7 @@ export default class ViewsBackend {
         is_priority: view.isPriority,
         due: view.due,
         group: view.group,
-        kanban_columns: JSON.stringify(view.kanbanColumns),
+        kanban_columns: view.kanbanColumnsString,
         view_type: view.viewType,
         subject_contains: view.subjectContains
       }
