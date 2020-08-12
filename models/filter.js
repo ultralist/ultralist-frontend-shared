@@ -17,7 +17,8 @@ type ConstructorArgs = {
   group?: string,
   filterString?: string,
   viewType?: string,
-  kanbanColumnsString: string
+  kanbanColumnsString: string,
+  todoListUUID: string
 }
 
 export default class Filter {
@@ -32,6 +33,7 @@ export default class Filter {
   group: ?string
   viewType: ?string
   kanbanColumnsString: string
+  todoListUUID: string
 
   constructor(args: ConstructorArgs) {
     this.subjectContains = args.subjectContains || null
@@ -45,6 +47,7 @@ export default class Filter {
     this.isDefault = args.isDefault || null
     this.viewType = args.viewType || "list"
     this.kanbanColumnsString = args.kanbanColumnsString || "[]"
+    this.todoListUUID = args.todoListUUID
 
     if (args.isPriority === undefined) {
       this.isPriority = null
@@ -226,7 +229,8 @@ export default class Filter {
       isDefault: this.isDefault,
       group: this.group,
       viewType: this.viewType,
-      kanbanColumnsString: this.kanbanColumnsString
+      kanbanColumnsString: this.kanbanColumnsString,
+      todoListUUID: this.todoListUUID
     }
   }
 }
@@ -243,6 +247,7 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains,
     viewType: backendJSON.view_type,
-    kanbanColumnsString: backendJSON.kanban_columns
+    kanbanColumnsString: backendJSON.kanban_columns,
+    todoListUUID: backendJSON.todo_list_uuid
   })
 }
