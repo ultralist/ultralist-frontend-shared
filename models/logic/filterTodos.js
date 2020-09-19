@@ -60,34 +60,44 @@ const filterTodos = (
         break
       case "mon":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date())) > 6)
+          return false
         if (!isMonday(todo.dueDate())) return false
         break
       case "tue":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isTuesday(todo.dueDate())) return false
         break
       case "wed":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isWednesday(todo.dueDate())) return false
         break
       case "thu":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isThursday(todo.dueDate())) return false
+        break
       case "fri":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isFriday(todo.dueDate())) return false
+        break
       case "sat":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isSaturday(todo.dueDate())) return false
+        break
       case "sun":
         if (todo.dueDate() === null) return false
-        if (differenceInDays(todo.dueDate(), new Date()) > 6) return false
+        if (Math.abs(differenceInDays(todo.dueDate(), new Date()) > 6))
+          return false
         if (!isSunday(todo.dueDate())) return false
         break
     }
