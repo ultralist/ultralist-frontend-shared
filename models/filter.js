@@ -46,8 +46,13 @@ export default class Filter {
     this.group = args.group || null
     this.isDefault = args.isDefault || null
     this.viewType = args.viewType || "list"
-    this.kanbanColumnsString = args.kanbanColumnsString || "[]"
     this.todoListUUID = args.todoListUUID
+
+    if (this.kanbanColumnsString) {
+      this.kanbanColumnsString = args.kanbanColumnsString
+    } else {
+      this.setKanbanColumns(["none"])
+    }
 
     if (args.isPriority === undefined) {
       this.isPriority = null
