@@ -48,7 +48,7 @@ export default class Filter {
     this.viewType = args.viewType || "list"
     this.todoListUUID = args.todoListUUID
 
-    if (this.kanbanColumnsString) {
+    if (args.kanbanColumnsString) {
       this.kanbanColumnsString = args.kanbanColumnsString
     } else {
       this.setKanbanColumns(["none"])
