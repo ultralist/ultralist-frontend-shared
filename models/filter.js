@@ -184,6 +184,9 @@ export default class Filter {
   }
 
   removeFilterString(str: string) {
+    if (str === "group:kanban") {
+      this.viewType = "list"
+    }
     switch (true) {
       case str === "is:archived" || str === "not:archived":
         this.archived = null
@@ -198,7 +201,7 @@ export default class Filter {
         this.due = null
         break
       case str.startsWith("group:"):
-        this.group = null
+        this.group = "all"
         break
       default:
         this.subjectContains = null
