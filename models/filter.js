@@ -241,6 +241,18 @@ export default class Filter {
       todoListUUID: this.todoListUUID
     }
   }
+
+  equals(other: Filter) {
+    return (
+      this.archived === other.archived &&
+      this.isPriority === other.isPriority &&
+      this.completed === other.completed &&
+      this.due === other.due &&
+      this.group === other.group &&
+      this.viewType === other.viewType &&
+      this.kanbanColumnsString === other.kanbanColumnsString
+    )
+  }
 }
 
 export const createFilterFromBackend = (backendJSON: Object) => {
