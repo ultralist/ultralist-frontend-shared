@@ -16,7 +16,6 @@ type ConstructorArgs = {
   due?: string,
   group?: string,
   filterString?: string,
-  viewType?: string,
   kanbanColumnsString: string,
   todoListUUID: string
 }
@@ -31,7 +30,6 @@ export default class Filter {
   completed: ?boolean
   due: ?string
   group: ?string
-  viewType: ?string
   kanbanColumnsString: string
   todoListUUID: string
 
@@ -45,7 +43,6 @@ export default class Filter {
     this.name = args.name || null
     this.group = args.group || null
     this.isDefault = args.isDefault || null
-    this.viewType = args.viewType || "list"
     this.todoListUUID = args.todoListUUID
 
     if (args.kanbanColumnsString) {
@@ -121,14 +118,6 @@ export default class Filter {
     }
   }
 
-  toggleViewType() {
-    if (this.viewType === "kanban") {
-      this.viewType = "list"
-    } else {
-      this.viewType = "kanban"
-    }
-  }
-
   addSubjectContains(s: string) {
     if (this.subjectContains) {
       this.subjectContains += ` ${s}`
@@ -184,9 +173,6 @@ export default class Filter {
   }
 
   removeFilterString(str: string) {
-    if (str === "group:kanban") {
-      this.viewType = "list"
-    }
     switch (true) {
       case str === "is:archived" || str === "not:archived":
         this.archived = null
@@ -236,7 +222,6 @@ export default class Filter {
       name: this.name,
       isDefault: this.isDefault,
       group: this.group,
-      viewType: this.viewType,
       kanbanColumnsString: this.kanbanColumnsString,
       todoListUUID: this.todoListUUID
     }
@@ -249,7 +234,6 @@ export default class Filter {
       this.completed === other.completed &&
       this.due === other.due &&
       this.group === other.group &&
-      this.viewType === other.viewType &&
       this.kanbanColumnsString === other.kanbanColumnsString
     )
   }
@@ -266,7 +250,6 @@ export const createFilterFromBackend = (backendJSON: Object) => {
     group: backendJSON.group,
     isDefault: backendJSON.is_default,
     subjectContains: backendJSON.subject_contains,
-    viewType: backendJSON.view_type,
     kanbanColumnsString: backendJSON.kanban_columns,
     todoListUUID: backendJSON.todo_list_uuid
   })

@@ -32,7 +32,6 @@ export default class ViewsBackend {
           name: view.name,
           is_default: view.isDefault,
           kanban_columns: view.kanbanColumnsString,
-          view_type: view.viewType,
           group: view.group,
           todoListUUID: view.todoListUUID
         }
@@ -50,7 +49,6 @@ export default class ViewsBackend {
         due: view.due,
         group: view.group,
         kanban_columns: view.kanbanColumnsString,
-        view_type: view.viewType,
         subject_contains: view.subjectContains,
         todo_list_uuid: view.todoListUUID
       }
