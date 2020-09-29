@@ -45,6 +45,23 @@ export default class TodoListBackend {
     })
   }
 
+  updateTodoListName(todoListUUID: string, name: string) {
+    return new Promise(resolve => {
+      this.backend
+        .apiRequest(
+          `api/v1/todo_lists/${todoListUUID}/update_name`,
+          "PUT",
+          this.token,
+          {
+            name
+          }
+        )
+        .then(data => {
+          resolve(createTodoListFromBackend(data))
+        })
+    })
+  }
+
   createTodoList(uuid: string, name: string) {
     return this.backend.apiRequest(`api/v1/todo_lists`, "POST", this.token, {
       todolist: {

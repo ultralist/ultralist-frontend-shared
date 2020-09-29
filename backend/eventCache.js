@@ -11,7 +11,6 @@ export default class EventCache {
 
   addItem(event: TodoEvent) {
     this.cache.push(event)
-    // window.localStorage.setItem("eventCache", this.cache)
   }
 
   toJSON(): Array<Object> {
@@ -20,6 +19,5 @@ export default class EventCache {
 
   clear() {
     this.cache = []
-    // window.localStorage.setItem("eventCache", this.cache)
   }
 }

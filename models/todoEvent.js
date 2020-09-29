@@ -1,45 +1,35 @@
 // @flow
-import TodoItemModel from "./todoItem"
-
 type TodoEvents = "EventAdded" | "EventDeleted" | "EventUpdated"
+type ObjectTypes = "TodoItem" | "TodoList"
 
 export default class TodoEvent {
-  todo: TodoItemModel
+  object: Object
   eventType: TodoEvents
+  objectType: ObjectTypes
 
-  constructor(eventType: TodoEvents, todo: TodoItemModel) {
+  constructor(eventType: TodoEvents, object: Object, objectType: ObjectTypes) {
     this.eventType = eventType
-    this.todo = todo
+    this.object = object
+    this.objectType = objectType
   }
 
   toJSON() {
     return {
       eventType: this.eventType,
-      id: this.todo.id,
-      uuid: this.todo.uuid,
-      subject: this.todo.subject,
-      projects: this.todo.projects,
-      contexts: this.todo.contexts,
-      due: this.todo.due,
-      completed: this.todo.completed,
-      completedDate: this.todo.completedDate,
-      archived: this.todo.archived,
-      isPriority: this.todo.isPriority,
-      status: this.todo.status,
-      notes: this.todo.notes
-      // createdAt: this.todo.createdAt
+      objectType: this.objectType,
+      object: this.object
     }
   }
 }
 
-export const createAddEvent = (todo: TodoItemModel) => {
-  return new TodoEvent("EventAdded", todo)
+export const createAddEvent = (object: Object, objectType: ObjectTypes) => {
+  return new TodoEvent("EventAdded", object, objectType)
 }
 
-export const createUpdateEvent = (todo: TodoItemModel) => {
-  return new TodoEvent("EventUpdated", todo)
+export const createUpdateEvent = (object: Object, objectType: ObjectTypes) => {
+  return new TodoEvent("EventUpdated", object, objectType)
 }
 
-export const createDeleteEvent = (todo: TodoItemModel) => {
-  return new TodoEvent("EventDeleted", todo)
+export const createDeleteEvent = (object: Object, objectType: ObjectTypes) => {
+  return new TodoEvent("EventDeleted", object, objectType)
 }
