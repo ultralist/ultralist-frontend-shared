@@ -1,7 +1,8 @@
 // @flow
-import { parseISO } from "date-fns"
 import TodoItemModel from "./todoItem"
+import TodoEvent from "./todoEvent"
 import utils from "../utils"
+import EventCache from "../backend/eventCache"
 
 type ConstructorArgs = {
   name?: string,
@@ -15,26 +16,32 @@ export default class TodoList {
   uuid: string
   updatedAt: Date
   todos: Array<TodoItemModel>
+  eventCache: EventCache
 
   constructor(args: ConstructorArgs) {
     this.name = args.name || "New List"
     this.uuid = args.uuid || utils.generateUuid()
     this.updatedAt = args.updatedAt
     this.todos = args.todos || []
+    this.eventCache = args.eventCache
   }
 
   addTodo(todo: TodoItemModel) {
     todo.id = findLowestUnusedID(this.todos)
     this.todos.push(todo)
+    this.eventCache.addItem(new TodoEvent("EventAdded", "TodoItem", todo))
   }
 
   updateTodo(todo: TodoItemModel) {
     this.deleteTodo(todo)
     this.addTodo(todo)
+
+    this.eventCache.addItem(new TodoEvent("EventUpdated", "TodoItem", todo))
   }
 
   deleteTodo(todo: TodoItemModel) {
     this.todos = this.todos.filter(t => t.uuid !== todo.uuid)
+    this.eventCache.addItem(new TodoEvent("EventDeleted", "TodoItem", todo))
   }
 
   toJSON() {

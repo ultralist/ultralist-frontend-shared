@@ -7,7 +7,7 @@ export default class TodoEvent {
   eventType: TodoEvents
   objectType: ObjectTypes
 
-  constructor(eventType: TodoEvents, object: Object, objectType: ObjectTypes) {
+  constructor(eventType: TodoEvents, objectType: ObjectTypes, object: Object) {
     this.eventType = eventType
     this.object = object
     this.objectType = objectType
@@ -17,7 +17,7 @@ export default class TodoEvent {
     return {
       eventType: this.eventType,
       objectType: this.objectType,
-      object: this.object
+      object: this.object.toJSON()
     }
   }
 }
