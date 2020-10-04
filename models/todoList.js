@@ -1,5 +1,6 @@
 // @flow
 import TodoItemModel from "./todoItem"
+import FilterModel from "./filter"
 import TodoEvent from "./todoEvent"
 import utils from "../utils"
 import EventCache from "../backend/eventCache"
@@ -8,7 +9,8 @@ type ConstructorArgs = {
   name?: string,
   uuid?: string,
   updatedAt?: Date,
-  todos?: Array<TodoItemModel>
+  todos?: Array<TodoItemModel>,
+  currentView?: FilterModel
 }
 
 export default class TodoList {
@@ -16,6 +18,7 @@ export default class TodoList {
   uuid: string
   updatedAt: Date
   todos: Array<TodoItemModel>
+  views: Array<FilterModel>
   eventCache: EventCache
 
   constructor(args: ConstructorArgs) {
@@ -23,6 +26,7 @@ export default class TodoList {
     this.uuid = args.uuid || utils.generateUuid()
     this.updatedAt = args.updatedAt
     this.todos = args.todos || []
+    this.views = args.views || []
     this.eventCache = args.eventCache
   }
 
@@ -44,12 +48,22 @@ export default class TodoList {
     this.eventCache.addItem(new TodoEvent("EventDeleted", "TodoItem", todo))
   }
 
+  defaultView(): FilterModel {
+    return this.views.filter(v => v.isDefault)[0] || new FilterModel({})
+  }
+
+  viewChanged(view: FilterModel): boolean {
+    const savedView = this.views.find(v => v.id === view.id)
+    return savedView === undefined || !savedView.equals(view)
+  }
+
   toJSON() {
     return {
       name: this.name,
       uuid: this.uuid,
       updatedAt: this.updatedAt,
-      todos: this.todos.map(todo => new TodoItemModel(todo).toJSON())
+      todos: this.todos.map(todo => new TodoItemModel(todo).toJSON()),
+      views: this.views.map(v => new FilterModel(v).toJSON())
     }
   }
 }
@@ -72,6 +86,7 @@ export const createTodoListFromBackend = (backendJSON: Object) => {
   return new TodoList({
     name: backendJSON.name,
     todos: backendJSON.todo_items_attributes.map(i => new TodoItemModel(i)),
+    views: backendJSON.views.map(i => new FilterModel(i)),
     updatedAt: backendJSON.updated_at,
     uuid: backendJSON.uuid
   })
@@ -81,6 +96,7 @@ export const createTodoListFromJSON = (storageJSON: Object) => {
   return new TodoList({
     name: storageJSON.name,
     todos: storageJSON.todos.map(i => new TodoItemModel(i)),
+    views: storageJSON.views.map(i => new FilterModel(i)),
     updatedAt: storageJSON.updatedAt,
     uuid: storageJSON.uuid
   })
