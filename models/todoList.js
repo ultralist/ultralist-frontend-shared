@@ -47,6 +47,11 @@ export default class TodoList {
     this.eventCache.addItem(new TodoEvent("EventDeleted", "TodoItem", todo))
   }
 
+  setName(name: string): void {
+    this.name = name
+    this.eventCache.addItem(new TodoEvent("EventUpdated", "TodoList", this))
+  }
+
   defaultView(): FilterModel {
     return this.views.filter(v => v.isDefault)[0] || new FilterModel({})
   }
