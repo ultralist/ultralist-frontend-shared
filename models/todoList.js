@@ -1,6 +1,6 @@
 // @flow
-import TodoItemModel from "./todoItem"
-import FilterModel from "./filter"
+import TodoItemModel, { createTodoItemFromBackend } from "./todoItem"
+import FilterModel, { createFilterFromBackend } from "./filter"
 import TodoEvent from "./todoEvent"
 import utils from "../utils"
 import EventCache from "../backend/eventCache"
@@ -10,7 +10,7 @@ type ConstructorArgs = {
   uuid?: string,
   updatedAt?: Date,
   todos?: Array<TodoItemModel>,
-  currentView?: FilterModel
+  views?: Array<FilterModel>
 }
 
 export default class TodoList {
@@ -26,7 +26,7 @@ export default class TodoList {
     this.uuid = args.uuid || utils.generateUuid()
     this.updatedAt = args.updatedAt
     this.todos = args.todos || []
-    this.views = args.views || []
+    this.views = args.views.map(v => new FilterModel(v))
     this.eventCache = args.eventCache
   }
 
@@ -37,9 +37,8 @@ export default class TodoList {
   }
 
   updateTodo(todo: TodoItemModel) {
-    this.deleteTodo(todo)
-    this.addTodo(todo)
-
+    this.todos = this.todos.filter(t => t.uuid !== todo.uuid)
+    this.todos.push(todo)
     this.eventCache.addItem(new TodoEvent("EventUpdated", "TodoItem", todo))
   }
 
@@ -66,6 +65,16 @@ export default class TodoList {
       views: this.views.map(v => new FilterModel(v).toJSON())
     }
   }
+
+  toBackendJSON() {
+    return {
+      name: this.name,
+      uuid: this.uuid,
+      updated_at: this.updated_at,
+      todos: this.todos.map(todo => new TodoItemModel(todo).toBackendJSON()),
+      views: this.views.map(v => new FilterModel(v).toBackendJSON())
+    }
+  }
 }
 
 export const findLowestUnusedID = (todos: Array<TodoItemModel>) => {
@@ -85,8 +94,8 @@ export const findLowestUnusedID = (todos: Array<TodoItemModel>) => {
 export const createTodoListFromBackend = (backendJSON: Object) => {
   return new TodoList({
     name: backendJSON.name,
-    todos: backendJSON.todo_items_attributes.map(i => new TodoItemModel(i)),
-    views: backendJSON.views.map(i => new FilterModel(i)),
+    todos: backendJSON.todo_items_attributes.map(createTodoItemFromBackend),
+    views: backendJSON.views.map(createFilterFromBackend),
     updatedAt: backendJSON.updated_at,
     uuid: backendJSON.uuid
   })
@@ -96,7 +105,7 @@ export const createTodoListFromJSON = (storageJSON: Object) => {
   return new TodoList({
     name: storageJSON.name,
     todos: storageJSON.todos.map(i => new TodoItemModel(i)),
-    views: storageJSON.views.map(i => new FilterModel(i)),
+    views: storageJSON.views.map(f => new FilterModel(f)),
     updatedAt: storageJSON.updatedAt,
     uuid: storageJSON.uuid
   })

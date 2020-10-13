@@ -20,6 +20,14 @@ export default class TodoEvent {
       object: this.object.toJSON()
     }
   }
+
+  toBackendJSON() {
+    return {
+      event_type: this.eventType,
+      object_type: this.objectType,
+      object: this.object.toBackendJSON()
+    }
+  }
 }
 
 export const createAddEvent = (object: Object, objectType: ObjectTypes) => {

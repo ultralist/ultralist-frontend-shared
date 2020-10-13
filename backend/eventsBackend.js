@@ -13,15 +13,13 @@ export default class EventsBackend {
   }
 
   publishEvents(cache: EventCache) {
-    return new Promise(resolve => {
-      this.backend.apiRequest(
-        `api/v1/todo_lists/event_cache`,
-        "PUT",
-        this.token,
-        {
-          events: cache.toJSON()
-        }
-      )
-    })
+    return this.backend.apiRequest(
+      `api/v1/todo_lists/event_cache`,
+      "PUT",
+      this.token,
+      {
+        events: cache.toBackendJSON()
+      }
+    )
   }
 }

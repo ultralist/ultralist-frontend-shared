@@ -14,6 +14,7 @@ type ConstructorArgs = {
   subject?: string,
   status?: string,
   due?: string | null,
+  todoListUUID: string,
   notes?: Array<string>
 }
 
@@ -29,6 +30,7 @@ export default class TodoItem {
   projects: Array<string>
   status: ?string
   due: string | null
+  todoListUUID: string
   notes: Array<string>
 
   constructor(args: ConstructorArgs) {
@@ -41,6 +43,7 @@ export default class TodoItem {
     this.setSubject(args.subject || "")
     this.due = args.due || null
     this.status = args.status || null
+    this.todoListUUID = args.todoListUUID
     this.notes = args.notes || []
   }
 
@@ -130,7 +133,44 @@ export default class TodoItem {
       projects: this.projects,
       status: this.status,
       due: this.due,
+      notes: this.notes,
+      todoListUUID: this.todoListUUID
+    }
+  }
+
+  toBackendJSON() {
+    return {
+      id: this.id,
+      uuid: this.uuid,
+      completed: this.completed,
+      archived: this.archived,
+      is_priority: this.isPriority,
+      completed_date: this.completedDate,
+      subject: this.subject,
+      contexts: this.contexts,
+      projects: this.projects,
+      status: this.status,
+      todo_list_uuid: this.todoListUUID,
+      due: this.due,
       notes: this.notes
     }
   }
+}
+
+export const createTodoItemFromBackend = (backendJSON: Object) => {
+  return new TodoItem({
+    id: backendJSON.id,
+    uuid: backendJSON.uuid,
+    completed: backendJSON.completed,
+    archived: backendJSON.archived,
+    isPriority: backendJSON.is_priority,
+    completedDate: backendJSON.completed_date,
+    subject: backendJSON.subject,
+    contexts: backendJSON.contexts,
+    projects: backendJSON.projects,
+    status: backendJSON.status,
+    todoListUUID: backendJSON.todo_list_uuid,
+    due: backendJSON.due,
+    notes: backendJSON.notes
+  })
 }

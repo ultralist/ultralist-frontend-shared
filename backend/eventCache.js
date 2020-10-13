@@ -17,6 +17,10 @@ export default class EventCache {
     return this.cache.map(e => e.toJSON())
   }
 
+  toBackendJSON(): Array<Object> {
+    return this.cache.map(e => e.toBackendJSON())
+  }
+
   clear() {
     this.cache = []
   }

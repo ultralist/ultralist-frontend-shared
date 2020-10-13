@@ -227,6 +227,22 @@ export default class Filter {
     }
   }
 
+  toBackendJSON() {
+    return {
+      subject_contains: this.subjectContains,
+      id: this.id,
+      archived: this.archived,
+      is_priority: this.isPriority,
+      completed: this.completed,
+      due: this.due,
+      name: this.name,
+      is_default: this.isDefault,
+      group: this.group,
+      kanban_columns: this.kanbanColumnsString,
+      todo_list_uuid: this.todoListUUID
+    }
+  }
+
   equals(other: Filter) {
     return (
       this.archived === other.archived &&
