@@ -26,24 +26,27 @@ export default class TodoList {
     this.uuid = args.uuid || utils.generateUuid()
     this.updatedAt = args.updatedAt
     this.todos = args.todos || []
-    this.views = args.views.map(v => new FilterModel(v))
+    this.views = args.views ? args.views.map(v => new FilterModel(v)) : []
     this.eventCache = args.eventCache
   }
 
   addTodo(todo: TodoItemModel) {
     todo.id = findLowestUnusedID(this.todos)
+    todo.todoListUUID = this.uuid
     this.todos.push(todo)
     this.eventCache.addItem(new TodoEvent("EventAdded", "TodoItem", todo))
   }
 
   updateTodo(todo: TodoItemModel) {
     this.todos = this.todos.filter(t => t.uuid !== todo.uuid)
+    todo.todoListUUID = this.uuid
     this.todos.push(todo)
     this.eventCache.addItem(new TodoEvent("EventUpdated", "TodoItem", todo))
   }
 
   deleteTodo(todo: TodoItemModel) {
     this.todos = this.todos.filter(t => t.uuid !== todo.uuid)
+    todo.todoListUUID = this.uuid
     this.eventCache.addItem(new TodoEvent("EventDeleted", "TodoItem", todo))
   }
 

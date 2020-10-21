@@ -16,6 +16,7 @@ export default class EventCache {
 
   addItem(event: TodoEvent) {
     this.cache.push(event)
+    this.publishEvents()
   }
 
   toJSON(): Array<Object> {
@@ -30,17 +31,17 @@ export default class EventCache {
     if (!navigator.onLine) return
     if (this.cache.length === 0) return
 
-    return this.backend.apiRequest(
-      `api/v1/todo_lists/event_cache`,
-      "PUT",
-      this.token,
-      {
+    this.backend
+      .apiRequest(`api/v1/todo_lists/event_cache`, "PUT", this.token, {
         events: this.toBackendJSON()
-      }
-    )
+      })
+      .then(() => {
+        this.clear()
+      })
   }
 
   clear() {
+    console.log("eventCache clear")
     this.cache = []
   }
 }
