@@ -41,7 +41,6 @@ export default class EventCache {
   }
 
   clear() {
-    console.log("eventCache clear")
     this.cache = []
   }
 }
