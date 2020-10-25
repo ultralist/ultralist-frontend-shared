@@ -16,7 +16,8 @@ type ConstructorArgs = {
   account?: AccountModel,
   isAccountAdmin?: boolean,
   lastLoginAt: string,
-  timeZone: string
+  timeZone: string,
+  CLIAuthCompleted: boolean
 }
 
 export default class User {
@@ -26,6 +27,7 @@ export default class User {
   views: Array<FilterModel>
   slackUsers: Array<SlackUserModel>
   todoLists: Array<TodoListModel>
+  completedCLIAuth: boolean
 
   name: string
   token: string
@@ -35,6 +37,7 @@ export default class User {
   isAccountAdmin: boolean
   lastLoginAt: string
   timeZone: string
+  completedCLIAuth: boolean
 
   constructor(args: ConstructorArgs) {
     this.account = args.account
@@ -52,6 +55,7 @@ export default class User {
     this.isAccountAdmin = args.isAccountAdmin || false
     this.lastLoginAt = args.lastLoginAt || ""
     this.timeZone = args.timeZone
+    this.completedCLIAuth = args.completedCLIAuth
   }
 
   defaultFilter() {
@@ -77,7 +81,8 @@ export default class User {
       ),
       todoLists: this.todoLists.map(todoList =>
         new TodoListModel(todoList).toJSON()
-      )
+      ),
+      completedCLIAuth: this.completedCLIAuth
     }
     if (this.account) ret.account = new AccountModel(this.account).toJSON()
 
