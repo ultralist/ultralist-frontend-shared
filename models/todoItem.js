@@ -14,6 +14,8 @@ type ConstructorArgs = {
   subject?: string,
   status?: string,
   due?: string | null,
+  recur?: string,
+  recurUntil?: string,
   todoListUUID: string,
   notes?: Array<string>
 }
@@ -30,6 +32,8 @@ export default class TodoItem {
   projects: Array<string>
   status: ?string
   due: string | null
+  recur: ?string
+  recurUntil: ?string
   todoListUUID: string
   notes: Array<string>
 
@@ -44,6 +48,8 @@ export default class TodoItem {
     this.due = args.due || null
     this.status = args.status || null
     this.todoListUUID = args.todoListUUID
+    this.recur = args.recur || null
+    this.recurUntil = args.recurUntil || null
     this.notes = args.notes || []
   }
 
@@ -134,6 +140,8 @@ export default class TodoItem {
       status: this.status,
       due: this.due,
       notes: this.notes,
+      recur: this.recur,
+      recurUntil: this.recurUntil,
       todoListUUID: this.todoListUUID
     }
   }
@@ -151,6 +159,8 @@ export default class TodoItem {
       projects: this.projects,
       status: this.status,
       todo_list_uuid: this.todoListUUID,
+      recur: this.recur,
+      recur_until: this.recur_until,
       due: this.due,
       notes: this.notes
     }
@@ -171,6 +181,8 @@ export const createTodoItemFromBackend = (backendJSON: Object) => {
     status: backendJSON.status,
     todoListUUID: backendJSON.todo_list_uuid,
     due: backendJSON.due,
-    notes: backendJSON.notes
+    notes: backendJSON.notes,
+    recur: backendJSON.recur,
+    recurUntil: backendJSON.recur_until
   })
 }
